@@ -1,0 +1,23 @@
+
+<h1>Книги за последнюю неделю</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <td>Название</td>
+      <td>Автор</td>
+      <td>Жанр</td>
+      <td>Дата создания</td>
+    </tr>
+  </thead>
+
+<% @books.each do |d| %>
+  <tr>
+  <td><%=link_to d.title, d %></td>
+  <td><%= d.user.first_name  %></td>
+  <td><%= d.genre  %></td>
+  <td><%= d.created_at.strftime("%d/%m/%y %I:%M") %></td>
+
+  </tr>
+<% end %>
+</table>
+

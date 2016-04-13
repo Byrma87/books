@@ -1,0 +1,44 @@
+
+<% if params[:my] %>
+
+  <h2>Мои книги</h2>
+  <table class="table">
+    <thead>
+    <tr><td>Название</td></tr>
+<% else %>
+  <h2>Все книги</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Название</td>
+        <td>Автор</td>
+        <td>Жанр</td>
+        <td>Содержание</td>
+        <td>Дата создания</td>
+      </tr>
+   
+<% end %>
+  </thead>
+
+<% @books.each do |d| %>
+  <tr>
+  <% if params[:my] %>
+  <td><%=link_to d.title, d %></td>
+  <td><%= d.user.first_name  %></td>
+  <th><%= button_to 'Изменить', edit_book_path(d), method: :get %> </th> 
+    <th><%= button_to 'Удалить', book_path(d), method: :delete %></th>
+
+    <% else %>
+  <td><%=link_to d.title, d %></td>
+  <td><%= d.user.first_name  %></td>
+  <td><%= label_tag d.genre %></td>
+   <td><%= label_tag d.contents %></td>
+   <td><%= d.created_at.strftime("%d/%m/%y %I:%M") %></td>
+   <td><%= label_tag d.image.current_path %></td>
+</div>
+  <% end %>
+   
+</tr>
+<% end %>
+
+</table>

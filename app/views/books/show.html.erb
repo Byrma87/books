@@ -1,0 +1,19 @@
+
+<table>
+   <h1>Книга</h1>
+  <td><%= @book.title %></td>
+  <tr></tr>
+  <td><%=  @book.genre %></td>
+  <tr></tr>
+  <td><%= @book.contents %></td>
+  <tr></tr>
+  <td><%= @book.created_at.strftime("%d/%m/%y %I:%M") %></td>
+  <tr></tr>
+  
+  <td><%=  image_tag @book.image.url %></td>
+  </table>
+ 
+<tr></tr>
+
+  <th><%= button_to 'Добавить в черновик', book_path%></th> 
+     
