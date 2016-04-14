@@ -5,15 +5,33 @@
   <tr></tr>
   <td><%=  @book.genre %></td>
   <tr></tr>
+  <td><%=  @book.graft %></td>
+  <tr></tr>
   <td><%= @book.contents %></td>
   <tr></tr>
   <td><%= @book.created_at.strftime("%d/%m/%y %I:%M") %></td>
   <tr></tr>
   
-  <td><%=  image_tag @book.image.url %></td>
+  <td> <%= image_tag(@book.image[0].url) if @book.image? %></td>
   </table>
  
 <tr></tr>
+<%= form_for :book, url: book_path(@book), method: :patch do |f| %>
+  
+  <% unless  current_user.nil? %>
+    <% if  @book.user_id.to_i == current_user.id.to_i %>
+      <% unless  @book.graft? %>
+      <input name="book[graft]" type="hidden" value="true" />
+      <p>
+      <%= f.submit 'Добавить в черновик' %>
+      </p>
+    <% else %>
 
-  <th><%= button_to 'Добавить в черновик', book_path%></th> 
-     
+      <input name="book[graft]" type="hidden" value="false" />
+      <p>
+      <%= f.submit 'Убрать с черновика' %>
+      </p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -28,13 +28,25 @@
   <th><%= button_to 'Изменить', edit_book_path(d), method: :get %> </th> 
     <th><%= button_to 'Удалить', book_path(d), method: :delete %></th>
 
-    <% else %>
-  <td><%=link_to d.title, d %></td>
-  <td><%= d.user.first_name  %></td>
-  <td><%= label_tag d.genre %></td>
-   <td><%= label_tag d.contents %></td>
-   <td><%= d.created_at.strftime("%d/%m/%y %I:%M") %></td>
-   <td><%= label_tag d.image.current_path %></td>
+  <% else %>
+    <td><%=link_to d.title, d %></td>
+    <td><%= d.user.first_name  %></td>
+    <td><%= label_tag d.genre %></td>
+    <td><%= label_tag d.contents %></td>
+    <td><%= d.created_at.strftime("%d/%m/%y %I:%M") %></td>
+    <% unless current_user.nil? %>
+    <% if  d.user_id == current_user.id %>
+      <% unless  d.graft?  %>
+        <input name="book[graft]" type="hidden" value="true" />
+        <p>
+        <th><%= button_to 'В черновик', book_path(d, book['dfdf']), method: :patch %></th>
+      <% else %>
+
+        <input name="book[graft]" type="hidden" value="false" />
+        <th><%= button_to 'Убрать с черновика', book_path(d), method: :patch %></th>
+      <% end %>
+    <% end %>
+    <% end %>
 </div>
   <% end %>
    

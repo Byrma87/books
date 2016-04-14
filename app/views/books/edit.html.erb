@@ -16,7 +16,7 @@
   </div>
   
   <label>Обложка</label>
-    <%= image_tag(@book.image_url) if @book.image? %> 
+    <%= image_tag(@book.image[0].url) if @book.image? %> 
     <%= f.file_field :image, multiple: true %>
   <p>
     <%= f.submit 'Сохранить' %>

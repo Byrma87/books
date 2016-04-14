@@ -3,11 +3,13 @@ class BooksController < ApplicationController
   
   def index
     @books =Book.all
+    @books = current_user.books if params[:my]
+  # byebug
   end
 
    def show
    @book = Book.find(params[:id])
-  # # byebug
+   # byebug
   # @votes = @petition.votes.size
   # # render json:@petition
    end
@@ -34,21 +36,22 @@ class BooksController < ApplicationController
 
   def update
      @book = Book.find(params[:id])
-
-     if @book.update(petition_params)
-    # flash.now[:notice] = "Петиция обновлена"
+     if @book.update(book_params)
+   
    redirect_to @book, notice: 'Петиция изменена'
      else
        render 'edit'
      end
    end
 
-  # def destroy
-  #   @petition = Petition.find(params[:id])
-  #   @petition.destroy
-  #   redirect_to @petition, notice: 'Петиция удалена'
-  # end
+   def destroy
+     @book = Book.find(params[:id])
+     @book.destroy
+     redirect_to @book, notice: 'Петиция удалена'
+   end
+
   def book_params
-    params.require(:book).permit(:title, :genre, :contents)
+   # byebug
+    params.require(:book).permit(:title, :genre, :graft, :contents, {image: []})
   end
 end
